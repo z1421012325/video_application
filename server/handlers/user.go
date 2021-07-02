@@ -1,9 +1,20 @@
 package handlers
 
-import "github.com/gin-gonic/gin"
+import (
+	"video_application/server/request"
+	"video_application/server/response"
+
+	"github.com/gin-gonic/gin"
+)
 
 // 登录
 func UserLogin(c *gin.Context){
+	var req request.UserLogin
+	if err := c.ShouldBind(&req); err != nil{
+		c.JSON(201,response.NewResponse(response.LoginCode,"登录参数异常",nil,err))
+		return
+	}
+
 
 }
 

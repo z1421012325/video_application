@@ -42,7 +42,7 @@ func (b Comments) TableName() string {
 
 
 /*
-CREATE TABLE `comments` (
+CREATE TABLE `reply_comment` (
 `id` INT AUTO_INCREMENT PRIMARY KEY,
 `cid` INT NOT NULL COMMENT '评论id',
 `reply_id` INT NOT NULL COMMENT '回复目标id',
@@ -79,7 +79,7 @@ func (b ReplyComment) TableName() string {
 
 
 /*
-CREATE TABLE `comments` (
+CREATE TABLE `like_comment` (
 `id` INT AUTO_INCREMENT PRIMARY KEY,
 `type_id` INT NOT NULL COMMENT '对应评论的id',
 `uid` INT NOT NULL,

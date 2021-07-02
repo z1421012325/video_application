@@ -20,10 +20,11 @@ CREATE TABLE `video` (
 `create_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 `delete_at` DATETIME
 
-todo 外键 uid,rid
+
 
 ) ENGINE=InnoDB AUTO_INCREMENT=100000 DEFAULT CHARSET=utf8;
 */
+// todo 外键 uid,rid
 
 type Video struct {
 	Vid int64			`gorm:"column:vid" json:"vid"`

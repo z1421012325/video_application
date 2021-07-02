@@ -9,14 +9,12 @@ import "time"
 CREATE TABLE `view_video` (
 `vid` INT NOT NULL,
 `uid` INT NOT NULL,
-`like` INT DATETIME 0 COMMENT '点赞行为,默认不点赞为0,点赞为1',
+`like` INT DEFAULT 0 COMMENT '点赞行为,默认不点赞为0,点赞为1',
 `create_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 `delete_at` DATETIME
-
-todo 外键
-
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 */
+// todo 外键
 
 type ViewVideo struct {
 	Vid int64			`gorm:"column:vid" json:"vid"`
