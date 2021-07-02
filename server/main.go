@@ -6,6 +6,10 @@ import (
 	"os"
 
 	"video_application/server/configure"
+
+	_ "video_application/server/cache"		// 数据库与redis链接
+	_ "video_application/server/database"
+
 	"video_application/server/service"
 )
 

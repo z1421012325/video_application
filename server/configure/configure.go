@@ -9,7 +9,7 @@ import (
 
 type Myconf struct {
 	Port string
-	DebugMode bool
+	DebugMode string
 	Mysql
 	MyRedis
 }
@@ -17,7 +17,9 @@ type Myconf struct {
 type Mysql struct {
 	Username string
 	Password string
-	Address string
+	Host string
+	Port string
+	DbName string
 }
 type MyRedis struct {
 	Username string
