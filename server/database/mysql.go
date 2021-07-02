@@ -4,7 +4,6 @@ package database
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	"video_application/server/configure"
@@ -17,7 +16,7 @@ import (
 
 var DB *gorm.DB
 
-func NewMySqlConn() {
+func init() {
 
 	name := configure.Config.Mysql.Username
 	pswd := configure.Config.Mysql.Password
