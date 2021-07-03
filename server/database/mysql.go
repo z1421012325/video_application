@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"video_application/server/configure"
+	"video_application/server/conf"
 
 	"github.com/gin-gonic/gin"
 	"gorm"
@@ -18,11 +18,11 @@ var DB *gorm.DB
 
 func init() {
 
-	name := configure.Config.Mysql.Username
-	pswd := configure.Config.Mysql.Password
-	host := configure.Config.Mysql.Host
-	port := configure.Config.Mysql.Port
-	dbname := configure.Config.Mysql.DbName
+	name := conf.Config.Mysql.Username
+	pswd := conf.Config.Mysql.Password
+	host := conf.Config.Mysql.Host
+	port := conf.Config.Mysql.Port
+	dbname := conf.Config.Mysql.DbName
 
 	db, err := gorm.Open("database",
 		fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", name, pswd, host, port, dbname))
@@ -31,7 +31,7 @@ func init() {
 	}
 
 	// 开发模式和生产模式日志开关
-	debug := configure.Config.DebugMode
+	debug := conf.Config.DebugMode
 	if gin.DebugMode != debug {
 		db.LogMode(false)
 	} else {
@@ -57,8 +57,12 @@ func Transaction(dbs ...*gorm.DB) bool {
 	tx := DB.Begin()
 
 	for _, db := range dbs {
-		tx = db
-		if tx.Error != nil {
+		//tx = db
+		//if tx.Error != nil {
+		//	tx.Rollback()
+		//	return false
+		//}
+		if db.Error != nil {
 			tx.Rollback()
 			return false
 		}

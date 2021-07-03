@@ -1,4 +1,4 @@
-package configure
+package conf
 
 import (
 	"fmt"
@@ -8,8 +8,9 @@ import (
 )
 
 type Myconf struct {
-	Port string
-	DebugMode string
+	Port string			// app端口
+	DebugMode string	// gin框架环境设置
+	Mixture string		// 加密混合字段
 	Mysql
 	MyRedis
 }
