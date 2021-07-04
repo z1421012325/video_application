@@ -18,13 +18,22 @@ jobs:
       with:
         go-version: 1.16
 
+    - name: Build
+      run: go build -v ./...
+
+    # 代码风格检查
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v2
       with:
         version: v1.29
 
-    - name: Build
-      run: go build -v ./...
+    # 安全检查
+    - name: Run Gosec Security Scanner
+      run:
+        # 在自动编译的宿主机中下载gosec
+        export PATH=$PATH:$(go env GOPATH)/bin
+        go get github.com/securego/gosec
+        gosec ./...
 
     - name: Test
       run: go test -v ./...
