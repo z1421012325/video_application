@@ -1,8 +1,9 @@
 package models
 
-
-
-import "time"
+import (
+	"time"
+	"video_application/server/database"
+)
 
 // 观看视频或进行点赞
 /*
@@ -26,4 +27,11 @@ type ViewVideo struct {
 
 func (b ViewVideo) TableName() string {
 	return "view_video"
+}
+
+
+// 对视频点击或者喜欢
+func (v *ViewVideo)LookOrLike(uid int64) error {
+	SQL := "UPDATE view_video SET v_id = ?,like = ? where uid = ?"
+	return database.DB.Exec(SQL,v.Vid,v.LikeVideo,uid).Error
 }

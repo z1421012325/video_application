@@ -68,7 +68,7 @@ func NewToken(v interface{}) (string, bool) {
 
 
 
-func CheckToken(tokenString string) (string, bool) {
+func checkToken(tokenString string) (string, bool) {
 	// 检测算法,返回盐值解析得到token struct(string)对象
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (i interface{}, e error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -87,7 +87,7 @@ func CheckToken(tokenString string) (string, bool) {
 	return "", false
 }
 
-func GetTokenMapClaims(tokenString string) map[string]interface{} {
+func getTokenMapClaims(tokenString string) map[string]interface{} {
 	// 检测算法,返回盐值解析得到token struct(string)对象
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (i interface{}, e error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

@@ -27,7 +27,7 @@ func UserLogin(c *gin.Context){
 	if !tools.CheckPassword(user.PassWord,req.Password){
 		c.JSON(
 			201,
-			response.NewResponse(
+			response.NewResponseData(
 				response.UserPassword,
 				"账号密码错误",
 				nil,
@@ -40,7 +40,7 @@ func UserLogin(c *gin.Context){
 	if !ok {
 		c.JSON(
 			201,
-			response.NewResponse(
+			response.NewResponseData(
 				response.TokenErr,
 				"登录异常",
 				nil,
@@ -56,7 +56,7 @@ func UserLogin(c *gin.Context){
 
 	c.JSON(
 		200,
-		response.NewResponse(
+		response.NewResponseData(
 			response.SUCCESS_CODE,
 			"登录成功",
 			nil,
@@ -77,7 +77,7 @@ func UserRegister(c *gin.Context){
 	if user.NickName != "" {
 		c.JSON(
 			201,
-			response.NewResponse(
+			response.NewResponseData(
 				response.RegisterErr,
 				"账号已存在",
 				nil,
@@ -91,7 +91,7 @@ func UserRegister(c *gin.Context){
 	if err != nil {
 		c.JSON(
 			401,
-			response.NewResponse(
+			response.NewResponseData(
 				response.RegisterErr,
 				"账号注册异常",
 				nil,
@@ -105,7 +105,7 @@ func UserRegister(c *gin.Context){
 
 	c.JSON(
 		200,
-		response.NewResponse(
+		response.NewResponseData(
 			response.SUCCESS_CODE,
 			"注册成功",
 			nil,
@@ -117,7 +117,7 @@ func UserOutlogin(c *gin.Context){
 	delUidToken(c)
 	c.JSON(
 		200,
-		response.NewResponse(
+		response.NewResponseData(
 			response.SUCCESS_CODE,
 			"登出成功",
 			nil,
@@ -137,7 +137,7 @@ func ModifyUserData(c *gin.Context){
 	if req.Uid != uid {
 		c.JSON(
 			201,
-			response.NewResponse(
+			response.NewResponseData(
 				response.IdentityErr,
 				"账号异常,无法修改,请重新登录!",
 				nil,
@@ -151,7 +151,7 @@ func ModifyUserData(c *gin.Context){
 	if err != nil {
 		c.JSON(
 			201,
-			response.NewResponse(
+			response.NewResponseData(
 				response.ModifyErr,
 				"修改用户资料异常",
 				nil,
@@ -160,7 +160,7 @@ func ModifyUserData(c *gin.Context){
 	}
 	c.JSON(
 		200,
-		response.NewResponse(
+		response.NewResponseData(
 			response.SUCCESS_CODE,
 			"修改用户资料成功",
 			nil,
@@ -179,7 +179,7 @@ func ModifyUserPassword(c *gin.Context){
 		req.NewPassword != req.OldPassword {
 		c.JSON(
 			201,
-			response.NewResponse(
+			response.NewResponseData(
 				response.IdentityErr,
 				"账号异常,无法修改,请重新登录!",
 				nil,
@@ -193,7 +193,7 @@ func ModifyUserPassword(c *gin.Context){
 	if !tools.CheckPassword(tools.EnCryptionPassword(user.PassWord),req.NewPassword){
 		c.JSON(
 			201,
-			response.NewResponse(
+			response.NewResponseData(
 				response.UserPassword,
 				"密码错误",
 				nil,
@@ -205,7 +205,7 @@ func ModifyUserPassword(c *gin.Context){
 	if err := user.ModifyUserPassword(); err != nil {
 		c.JSON(
 			201,
-			response.NewResponse(
+			response.NewResponseData(
 				response.ModifyErr,
 				"账号异常,无法修改,稍后再试!",
 				nil,
@@ -215,7 +215,7 @@ func ModifyUserPassword(c *gin.Context){
 	// success
 	c.JSON(
 		200,
-		response.NewResponse(
+		response.NewResponseData(
 			response.SUCCESS_CODE,
 			"修改密码成功,请重新登录!",
 			nil,

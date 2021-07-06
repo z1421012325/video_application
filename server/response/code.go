@@ -22,4 +22,7 @@ const (
 	// 身份异常
 	IdentityErr = 20009
 
+	// 数据库异常
+	DatabaseErr = 40004
+
 )

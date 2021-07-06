@@ -18,7 +18,7 @@ func VerifyUser() gin.HandlerFunc {
 		if StrToken != redisToken {
 			respondWithError(
 				201,
-				response.NewResponse(
+				response.NewResponseData(
 					response.ValueCode,
 					"账号异常",
 					nil,

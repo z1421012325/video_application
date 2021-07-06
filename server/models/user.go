@@ -56,7 +56,7 @@ func (u *User)GetToUidUser(){
 // 注册
 func (u *User)Registry() error {
 	sql := "INSERT INTO user (nickname,user_name,password,) VALUES (?,?,?)"
-	return database.DB.Raw(sql,u.NickName,u.UserName,u.PassWord).Error
+	return database.DB.Exec(sql,u.NickName,u.UserName,u.PassWord).Error
 }
 
 
