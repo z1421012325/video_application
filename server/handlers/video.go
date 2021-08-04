@@ -27,7 +27,7 @@ func UpVideo(c *gin.Context) {
 	// 该项目实际算是个demo 实际需求根据业务变化
 
 	token,uid := GetRequestTokenANDUid(c)
-	if req.Uid != uid && token == cache.RedisGet(string(req.Uid))  {
+	if req.Uid != uid && token == cache.CacheGet(string(req.Uid))  {
 		c.JSON(
 			401,
 			response.NewResponseData(
@@ -72,7 +72,7 @@ func DleVideo(c *gin.Context) {
 	}
 
 	token,uid := GetRequestTokenANDUid(c)
-	if req.Uid != uid && token == cache.RedisGet(string(req.Uid))  {
+	if req.Uid != uid && token == cache.CacheGet(string(req.Uid))  {
 		c.JSON(
 			401,
 			response.NewResponseData(

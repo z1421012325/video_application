@@ -14,7 +14,7 @@ func VerifyUser() gin.HandlerFunc {
 
 		StrToken := tools.GetRequestToken(c)	// 得到请求中的token
 		uid := tools.GetRequestUid(c)
-		redisToken := cache.RedisGet(string(uid))
+		redisToken := cache.CacheGet(string(uid))
 		if StrToken != redisToken {
 			respondWithError(
 				201,

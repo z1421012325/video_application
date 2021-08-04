@@ -45,23 +45,30 @@ func init() {
 
 
 
-func RedisGet(key string) (value string){
+func CacheGet(key string) (value string){
 	value,_ = RPool.Get(key).Result()
 	return value
 }
 
 
-func RedisSet(key,value string,ex time.Duration) (err error){
+func CacheSet(key,value string,ex time.Duration) (err error){
 	_,err =RPool.Set(key,value,ex).Result()
 	return
 }
 
-func RedisDel(key string) (err error){
+func CacheDel(key string) (err error){
 	_,err = RPool.Del(key).Result()
 	return
 }
 
 
+func CacheVideoNewLook(key string,score float64,vid int64)(err error) {
+	_,err = RPool.ZAdd(key,redis.Z{
+		Score:  score,
+		Member: vid,
+	}).Result()
+	return
+}
 
 
 

@@ -21,12 +21,9 @@ CREATE TABLE `video` (
 `create_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 `delete_at` DATETIME
 
-
-
 ) ENGINE=InnoDB AUTO_INCREMENT=100000 DEFAULT CHARSET=utf8;
 */
 // todo 外键 uid,rid
-
 
 // 分类
 const (
@@ -41,11 +38,8 @@ const (
 	DonGman
 	YingShi
 	YinYue
-
 	QiTa
 )
-
-
 
 
 type Video struct {
@@ -82,6 +76,54 @@ func (v *Video)DelVideo() error {
 	SQL := "UPDATE video SET delete_id = now() WHERE v_id = ? ,u_id = ?"
 	return database.DB.Exec(SQL,v.Vid,v.Uid).Error
 }
+
+// 返回类似video
+func ReturnSimliarVideo(vid int64) (vides []Video){
+	video := ResultVideo(vid)
+
+	SQL := "SELECT * FROM video WHERE v_id = ? AND type = ? AND tags IN (?) ORDER BY DESC LIMIT 20"
+	database.DB.Raw(SQL,vid,video.Type,video.Tags).Scan(&vides)
+	return
+}
+
+
+
+
+
+
+
+
+
+
+type videoScan struct {
+	video Video
+	Number int
+}
+
+type videos struct{
+	Len int
+	videos []videoScan
+}
+
+// 搜索
+func GetVideo(key string,page,number int) (vs videos,err error){
+
+	SQL := "SELECT v.*,count(*) as number FROM video AS v " +
+		"INNER JOIN likes AS l" +
+		"v.v_id = l.v_id " +
+		"WHERE v.title LIKE '%?%' AND v.type LIKE '%?%' AND v.delete_id IS NULL ORDER BY DESC LIMIT ?,?"
+
+	err = database.DB.Raw(SQL,key,key,page,number).Scan(&vs).Error
+	vs.Len = len(vs.videos)
+	return
+}
+
+
+
+
+
+
+
 
 
 // 返回视频对象

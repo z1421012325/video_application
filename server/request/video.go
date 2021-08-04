@@ -2,7 +2,7 @@ package request
 
 import "video_application/server/models"
 
-
+// 上传video
 type UpVideo struct {
 	Uid int64			`json:"u_id" form:"u_id" binding:"required"`
 	Title string		`json:"title" form:"title" binding:"required,max=50"`
@@ -32,8 +32,14 @@ func (v *UpVideo)CheckVideoType() {
 	}
 }
 
-
+// 删除video
 type DelVideo struct {
 	Uid int64			`json:"u_id" form:"u_id" binding:"required"`
+	Vid int64			`json:"v_id" form:"v_id" binding:"required"`
+}
+
+
+// 类似video
+type Simliar struct {
 	Vid int64			`json:"v_id" form:"v_id" binding:"required"`
 }

@@ -52,7 +52,7 @@ func UserLogin(c *gin.Context){
 	session.Set("u_id", user.Uid)
 	session.Set("token", token)
 	_ = session.Save()
-	_ = cache.RedisSet(string(user.Uid),token,86400 * 30)
+	_ = cache.CacheSet(string(user.Uid),token,86400 * 30)
 
 	c.JSON(
 		200,
@@ -175,7 +175,7 @@ func ModifyUserPassword(c *gin.Context){
 	}
 
 	token,uid := GetRequestTokenANDUid(c)
-	if req.Uid != uid && token == cache.RedisGet(string(req.Uid)) &&
+	if req.Uid != uid && token == cache.CacheGet(string(req.Uid)) &&
 		req.NewPassword != req.OldPassword {
 		c.JSON(
 			201,
@@ -244,7 +244,7 @@ func delUidToken(c *gin.Context) {
 	session.Delete("token")
 	_ = session.Save()
 
-	_ = cache.RedisDel(string(uid))
+	_ = cache.CacheDel(string(uid))
 }
 
 func setUidToken(c *gin.Context,uid,token string) {
@@ -253,7 +253,7 @@ func setUidToken(c *gin.Context,uid,token string) {
 	session.Set("token", token)
 	_ = session.Save()
 
-	_ = cache.RedisSet(uid,token,86400 * 30)
+	_ = cache.CacheSet(uid,token,86400 * 30)
 }
 
 
