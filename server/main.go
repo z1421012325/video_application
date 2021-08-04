@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"video_application/server/configure"
+	"video_application/server/conf"
 
 	_ "video_application/server/cache"		// 数据库与redis链接
 	_ "video_application/server/database"
@@ -22,12 +22,12 @@ func main() {
 	}
 
 	// 读取配置
-	err := configure.ReadConfigureFile(os.Args[1])
+	err := conf.ReadConfigureFile(os.Args[1])
 	if err != nil {
 		os.Exit(1)
 	}
 
-	err = service.RunService(configure.Config.Port)
+	err = service.RunService(conf.Config.Port)
 	if err != nil {
 		os.Exit(1)
 	}

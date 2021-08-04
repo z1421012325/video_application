@@ -3,7 +3,7 @@ package cache
 import (
 	"time"
 
-	"video_application/server/configure"
+	"video_application/server/conf"
 
 	"github.com/go-redis/redis"
 )
@@ -24,8 +24,8 @@ var (
 // todo 之后进行更加详细的配置
 func init() {
 	rb := redis.NewClient(&redis.Options{
-		Addr:         configure.Config.MyRedis.Address,
-		Password:     configure.Config.MyRedis.Password,
+		Addr:         conf.Config.MyRedis.Address,
+		Password:     conf.Config.MyRedis.Password,
 		DB:           0,
 		DialTimeout:  0,
 		ReadTimeout:  time.Second,
@@ -42,3 +42,39 @@ func init() {
 	//RDB = rb
 	RPool.Client = rb
 }
+
+
+
+func CacheGet(key string) (value string){
+	value,_ = RPool.Get(key).Result()
+	return value
+}
+
+
+func CacheSet(key,value string,ex time.Duration) (err error){
+	_,err =RPool.Set(key,value,ex).Result()
+	return
+}
+
+func CacheDel(key string) (err error){
+	_,err = RPool.Del(key).Result()
+	return
+}
+
+
+func CacheVideoNewLook(key string,score float64,vid int64)(err error) {
+	_,err = RPool.ZAdd(key,redis.Z{
+		Score:  score,
+		Member: vid,
+	}).Result()
+	return
+}
+
+
+
+
+
+
+
+
+
